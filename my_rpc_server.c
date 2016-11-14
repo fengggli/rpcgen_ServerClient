@@ -6,6 +6,7 @@
 
 #include "my_rpc.h"
 #include <time.h>
+#include <dirent.h>
 
 /* 
  * function 1 get the server time
@@ -94,19 +95,50 @@ reverse_1_svc(char **argp, struct svc_req *rqstp)
 /* 
  * function 4
  * read all the entries in a directory
+ * code is original from here:
+    https://docs.oracle.com/cd/E19683-01/816-1435/6m7rrfn7f/index.html 
  */
 readdir_res *
 readdir_1_svc(nametype *argp, struct svc_req *rqstp)
 {
-	static readdir_res  result;
-
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
+    DIR *dirp;
+    struct dirent *d;
+    namelist nl;
+    namelist *nlp;
+    static readdir_res res; /* must be static! */
+    
+    /* Open directory */
+    dirp = opendir(*dirname);
+    if (dirp == (DIR *)NULL) {
+        res.errno = errno;
+        return (&res);
+    }
+    /* Free previous result */
+    xdr_free(xdr_readdir_res, &res);
+    /*
+     * Collect directory entries.
+ * Memory allocated here is free by
+     * xdr_free the next time readdir_1
+ * is called
+     */
+    nlp = &res.readdir_res_u.list;
+    while (d = readdir(dirp)) {
+        nl = *nlp = (namenode *) 
+                            malloc(sizeof(namenode));
+        if (nl == (namenode *) NULL) {
+            res.errno = EAGAIN;
+            closedir(dirp);
+            return(&res);
+        }
+        nl->name = strdup(d->d_name);
+        nlp = &nl->next;
+    }
+    *nlp = (namelist)NULL;
+    /* Return the result */
+    res.errno = 0;
+    closedir(dirp);
+    return (&res);
 }
-
 
 /*
  * function 5

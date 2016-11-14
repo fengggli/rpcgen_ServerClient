@@ -94,10 +94,30 @@ clockprog_1(char *host)
 
         // function 4 list all files
         else if(c == '4'){
+            char path[80];
+            int errno;
+            sprintf(path, ".");
+            readdir_1_arg = path;
+            char * dir;
+            namelist nl;
+        
+            
             result_4 = readdir_1(&readdir_1_arg, clnt);
             if (result_4 == (readdir_res *) NULL) {
                 clnt_perror (clnt, "call failed");
+                break;
             }
+            if(result_4->errno != 0){
+                errno = result_4->errno;
+                perror(dir);
+                break;
+            }
+            for (nl = result_4->readdir_res_u.list;
+                            nl != NULL;
+                    nl = nl->next) {
+                    printf("%s\n", nl->name);
+                }
+            xdr_free(xdr_readdir_res, result_4);
         }
 
         // function 5 accept two integer matrix
