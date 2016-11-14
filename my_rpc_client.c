@@ -62,6 +62,7 @@ clockprog_1(char *host)
 
         // function 3 reverse Echo
         else if(c == '3'){
+            getchar();
             int bytes_read;
             size_t nbytes = 100;
             char *my_string;

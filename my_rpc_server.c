@@ -69,11 +69,25 @@ char **
 reverse_1_svc(char **argp, struct svc_req *rqstp)
 {
 	static char * result;
+    int i = 0;
+    int length=0;
 
 	/*
 	 * insert server code here
 	 */
+    char reversed[101];
 
+    // get the length first
+    while((*argp)[i]!='\n')
+        i++;
+    length = i;
+
+    //now reverse
+    for(i = 0; i< length; i++)
+        reversed[i] = (*argp)[length -1 - i];
+
+    reversed[i] = '\n';
+    result = reversed;
 	return &result;
 }
 
