@@ -24,6 +24,7 @@ clockprog_1(char *host)
 	coupled_matrix  addmatrix_1_arg;
 
     // user input
+    char input[80];
     char c;
 
 #ifndef	DEBUG
@@ -35,9 +36,13 @@ clockprog_1(char *host)
 #endif	/* DEBUG */
 
     // prompt 
-    printf("1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix\n");
 
-    while((c = getchar())!= 'q'){
+    while(1){
+            
+        printf("1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix\n");
+        gets(input);
+        c = input[0];
+        printf("user input %c", c);
 
         // function 1 show the server time
         if(c == '1'){
@@ -62,7 +67,6 @@ clockprog_1(char *host)
 
         // function 3 reverse Echo
         else if(c == '3'){
-            getchar();
             int bytes_read;
             size_t nbytes = 100;
             char *my_string;
@@ -104,8 +108,13 @@ clockprog_1(char *host)
             }
         }
 
+        else if(c == 'q'){
+            printf("bye\n");
+            break;
+        }
+
         else{
-            printf("wrong input, try again, type q to quit\n");
+            printf("wrong input!\n");
         }
     }
 #ifndef	DEBUG
