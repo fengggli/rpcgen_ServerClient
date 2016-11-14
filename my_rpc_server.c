@@ -7,6 +7,7 @@
 #include "my_rpc.h"
 #include <time.h>
 #include <dirent.h>
+#include <stdio.h>
 
 /* 
  * function 1 get the server time
@@ -98,47 +99,29 @@ reverse_1_svc(char **argp, struct svc_req *rqstp)
  * code is original from here:
     https://docs.oracle.com/cd/E19683-01/816-1435/6m7rrfn7f/index.html 
  */
-readdir_res *
-readdir_1_svc(nametype *argp, struct svc_req *rqstp)
+
+char **
+readdir_1_svc(void *argp, struct svc_req *rqstp)
 {
-    DIR *dirp;
-    struct dirent *d;
-    namelist nl;
-    namelist *nlp;
-    static readdir_res res; /* must be static! */
-    
-    /* Open directory */
-    dirp = opendir(*dirname);
-    if (dirp == (DIR *)NULL) {
-        res.errno = errno;
-        return (&res);
-    }
-    /* Free previous result */
-    xdr_free(xdr_readdir_res, &res);
-    /*
-     * Collect directory entries.
- * Memory allocated here is free by
-     * xdr_free the next time readdir_1
- * is called
-     */
-    nlp = &res.readdir_res_u.list;
-    while (d = readdir(dirp)) {
-        nl = *nlp = (namenode *) 
-                            malloc(sizeof(namenode));
-        if (nl == (namenode *) NULL) {
-            res.errno = EAGAIN;
-            closedir(dirp);
-            return(&res);
+    static char *result;
+    static char tmp[300];
+    DIR           *d;
+    struct dirent *dir;
+    d = opendir("./");
+    if(d){
+        while (dir = readdir(d))
+        {
+            sprintf(tmp,"%s\t", dir->d_name);
+            printf("%s\t", dir->d_name);
         }
-        nl->name = strdup(d->d_name);
-        nlp = &nl->next;
+
+        sprintf(tmp,"end\n");
+        closedir(d);
     }
-    *nlp = (namelist)NULL;
-    /* Return the result */
-    res.errno = 0;
-    closedir(dirp);
-    return (&res);
+    result = tmp;
+    return &result;
 }
+
 
 /*
  * function 5

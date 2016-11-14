@@ -18,14 +18,17 @@ clockprog_1(char *host)
 	coupled_int_list  merge_1_arg;
 	char * *result_3;
 	char * reverse_1_arg;
-	readdir_res  *result_4;
-	nametype  readdir_1_arg;
+	char  **result_4;
 	int  *result_5;
 	coupled_matrix  addmatrix_1_arg;
 
     // user input
     char input[80];
     char c;
+    int bytes_read;
+    size_t nbytes = 100;
+    char *my_string;
+
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, CLOCKPROG, MYVERS, "udp");
@@ -39,10 +42,15 @@ clockprog_1(char *host)
 
     while(1){
             
-        printf("1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix\n");
-        gets(input);
-        c = input[0];
-        printf("user input %c", c);
+        printf("1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit\n");
+        my_string = (char *)malloc(nbytes +1);
+        bytes_read = getline(&my_string,&nbytes, stdin);
+        if(bytes_read == -1){
+            puts("ERROR, now exit");
+            exit(-1); 
+        }
+        c = my_string[0];
+        printf("user input %c\n", c);
 
         // function 1 show the server time
         if(c == '1'){
@@ -67,9 +75,6 @@ clockprog_1(char *host)
 
         // function 3 reverse Echo
         else if(c == '3'){
-            int bytes_read;
-            size_t nbytes = 100;
-            char *my_string;
             // ask for user input
             printf("please type a sentence\n");
             my_string = (char *)malloc(nbytes +1);
@@ -90,34 +95,21 @@ clockprog_1(char *host)
                 // print out the reversed string
                 printf("after reverse: %s\n", *result_3);
             }
+
+            free(my_string);
         }
 
         // function 4 list all files
         else if(c == '4'){
-            char path[80];
-            int errno;
-            sprintf(path, ".");
-            readdir_1_arg = path;
-            char * dir;
-            namelist nl;
-        
-            
-            result_4 = readdir_1(&readdir_1_arg, clnt);
-            if (result_4 == (readdir_res *) NULL) {
+           
+            result_4 = readdir_1((void*)&gettime_1_arg, clnt);
+            if (result_4 == (char **) NULL) {
                 clnt_perror (clnt, "call failed");
-                break;
             }
-            if(result_4->errno != 0){
-                errno = result_4->errno;
-                perror(dir);
-                break;
+            else{
+                // print out the reversed string
+                printf("files in this directory\n: %s\n", *result_4);
             }
-            for (nl = result_4->readdir_res_u.list;
-                            nl != NULL;
-                    nl = nl->next) {
-                    printf("%s\n", nl->name);
-                }
-            xdr_free(xdr_readdir_res, result_4);
         }
 
         // function 5 accept two integer matrix

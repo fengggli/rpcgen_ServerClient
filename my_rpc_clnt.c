@@ -54,15 +54,15 @@ reverse_1(char **argp, CLIENT *clnt)
 	return (&clnt_res);
 }
 
-readdir_res *
-readdir_1(nametype *argp, CLIENT *clnt)
+char **
+readdir_1(void *argp, CLIENT *clnt)
 {
-	static readdir_res clnt_res;
+	static char *clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, READDIR,
-		(xdrproc_t) xdr_nametype, (caddr_t) argp,
-		(xdrproc_t) xdr_readdir_res, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_void, (caddr_t) argp,
+		(xdrproc_t) xdr_wrapstring, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}

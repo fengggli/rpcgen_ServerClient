@@ -13,25 +13,6 @@
 extern "C" {
 #endif
 
-#define MAXNAMELEN 255
-
-typedef char *nametype;
-
-typedef struct namenode *namelist;
-
-struct namenode {
-	nametype name;
-	namelist next;
-};
-typedef struct namenode namenode;
-
-struct readdir_res {
-	int errno;
-	union {
-		namelist list;
-	} readdir_res_u;
-};
-typedef struct readdir_res readdir_res;
 
 typedef struct intnode *intlist;
 
@@ -75,8 +56,8 @@ extern  intlist * merge_1_svc(coupled_int_list *, struct svc_req *);
 extern  char ** reverse_1(char **, CLIENT *);
 extern  char ** reverse_1_svc(char **, struct svc_req *);
 #define READDIR 4
-extern  readdir_res * readdir_1(nametype *, CLIENT *);
-extern  readdir_res * readdir_1_svc(nametype *, struct svc_req *);
+extern  char ** readdir_1(void *, CLIENT *);
+extern  char ** readdir_1_svc(void *, struct svc_req *);
 #define ADDMATRIX 5
 extern  int * addmatrix_1(coupled_matrix *, CLIENT *);
 extern  int * addmatrix_1_svc(coupled_matrix *, struct svc_req *);
@@ -93,8 +74,8 @@ extern  intlist * merge_1_svc();
 extern  char ** reverse_1();
 extern  char ** reverse_1_svc();
 #define READDIR 4
-extern  readdir_res * readdir_1();
-extern  readdir_res * readdir_1_svc();
+extern  char ** readdir_1();
+extern  char ** readdir_1_svc();
 #define ADDMATRIX 5
 extern  int * addmatrix_1();
 extern  int * addmatrix_1_svc();
@@ -104,20 +85,12 @@ extern int clockprog_1_freeresult ();
 /* the xdr functions */
 
 #if defined(__STDC__) || defined(__cplusplus)
-extern  bool_t xdr_nametype (XDR *, nametype*);
-extern  bool_t xdr_namelist (XDR *, namelist*);
-extern  bool_t xdr_namenode (XDR *, namenode*);
-extern  bool_t xdr_readdir_res (XDR *, readdir_res*);
 extern  bool_t xdr_intlist (XDR *, intlist*);
 extern  bool_t xdr_intnode (XDR *, intnode*);
 extern  bool_t xdr_coupled_int_list (XDR *, coupled_int_list*);
 extern  bool_t xdr_coupled_matrix (XDR *, coupled_matrix*);
 
 #else /* K&R C */
-extern bool_t xdr_nametype ();
-extern bool_t xdr_namelist ();
-extern bool_t xdr_namenode ();
-extern bool_t xdr_readdir_res ();
 extern bool_t xdr_intlist ();
 extern bool_t xdr_intnode ();
 extern bool_t xdr_coupled_int_list ();
