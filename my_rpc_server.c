@@ -136,6 +136,19 @@ addmatrix_1_svc(coupled_matrix *argp, struct svc_req *rqstp)
 	 * insert server code here
 	 */
     // get the dimension
+    intnode *pa = argp->a;
+    intnode *pb = argp->b;
+    int d1 = argp->d1;
+    int d2 = argp->d2;
+    int i, j;
 
+    // add them up
+    result = 0;
+    for(i = 0; i< d1*d2; i++){
+            result += (pa->v + pb->v);
+            pa = pa->next;
+            pb = pb->next;
+        }
+    }
 	return &result;
 }

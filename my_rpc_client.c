@@ -114,9 +114,44 @@ clockprog_1(char *host)
 
         // function 5 accept two integer matrix
         else if(c == '5'){
+            //  prepare the two matrix
+            int i, j;
+            int d1 = 2;
+            int d2 = 3;
+            int a[] = {1,2,3,4,5,6};
+            int b[] = {1,2,3,4,5,6};
+            intnode *heada,*pa,*headb, *pb;
+
+            addmatrix_1_arg.d1 = d1;
+            addmatrix_1_arg.d2 = d2;
+            // save the arrays
+            heada = NULL;
+            headb = NULL;
+            for(i = 0; i< d1*d2; i++){
+                pa = (intnode *)malloc(sizeof(intnode));
+                pa->v = a[i];
+                pa->next = heada;
+                heada = pa;
+
+                pa = (intnode *)malloc(sizeof(intnode));
+
+                pb->v = b[i];
+                pb->next = headb;
+                headb = pb;
+            }
+
+            printf("array is mashalled\n");
+
+            
+
             result_5 = addmatrix_1(&addmatrix_1_arg, clnt);
+
             if (result_5 == (int *) NULL) {
                 clnt_perror (clnt, "call failed");
+            }
+            // else print the content of the matrix
+            else{
+                printf("sum is %d\n", *result_5);
             }
         }
 
