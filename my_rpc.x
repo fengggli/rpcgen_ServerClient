@@ -30,7 +30,7 @@ program CLOCKPROG
         string GETTIME()=1;	
         intlist MERGE(coupled_int_list l) = 2;
         string REVERSE(string s) = 3;
-        string READDIR() = 4;
+        string READDIR(string s) = 4;
         int ADDMATRIX(coupled_matrix m) = 5;
     } = 1; 
 } = 0x31111111; 

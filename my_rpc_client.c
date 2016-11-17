@@ -37,6 +37,7 @@ clockprog_1(char *host)
 	char * *result_3;
 	char * reverse_1_arg;
 	char  **result_4;
+	char * readdir_1_arg;
 	int  *result_5;
 	coupled_matrix  addmatrix_1_arg;
 
@@ -143,14 +144,23 @@ clockprog_1(char *host)
 
         // function 4 list all files
         else if(c == '4'){
-           
-            result_4 = readdir_1((void*)&gettime_1_arg, clnt);
+
+            printf("type the path :");
+
+            char input[80];
+            scanf("%s", input);
+            getchar();
+
+            printf("all the files under: %s\n", input); 
+
+            readdir_1_arg = input;
+            result_4 = readdir_1((void*)&readdir_1_arg, clnt);
             if (result_4 == (char **) NULL) {
                 clnt_perror (clnt, "call failed");
             }
             else{
                 // print out the reversed string
-                printf("files in this directory\n: %s\n", *result_4);
+                printf("\t%s", *result_4);
             }
         }
 

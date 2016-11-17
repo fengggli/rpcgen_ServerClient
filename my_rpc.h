@@ -50,8 +50,8 @@ extern  intlist * merge_1_svc(coupled_int_list *, struct svc_req *);
 extern  char ** reverse_1(char **, CLIENT *);
 extern  char ** reverse_1_svc(char **, struct svc_req *);
 #define READDIR 4
-extern  char ** readdir_1(void *, CLIENT *);
-extern  char ** readdir_1_svc(void *, struct svc_req *);
+extern  char ** readdir_1(char **, CLIENT *);
+extern  char ** readdir_1_svc(char **, struct svc_req *);
 #define ADDMATRIX 5
 extern  int * addmatrix_1(coupled_matrix *, CLIENT *);
 extern  int * addmatrix_1_svc(coupled_matrix *, struct svc_req *);

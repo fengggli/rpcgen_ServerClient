@@ -22,6 +22,7 @@ clockprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 	union {
 		coupled_int_list merge_1_arg;
 		char *reverse_1_arg;
+		char *readdir_1_arg;
 		coupled_matrix addmatrix_1_arg;
 	} argument;
 	char *result;
@@ -52,7 +53,7 @@ clockprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		break;
 
 	case READDIR:
-		_xdr_argument = (xdrproc_t) xdr_void;
+		_xdr_argument = (xdrproc_t) xdr_wrapstring;
 		_xdr_result = (xdrproc_t) xdr_wrapstring;
 		local = (char *(*)(char *, struct svc_req *)) readdir_1_svc;
 		break;

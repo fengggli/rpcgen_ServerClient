@@ -49,5 +49,5 @@ run_server:
 # clean:
 #	 $(RM) core $(TARGETS) $(OBJECTS_CLNT) $(OBJECTS_SVC) $(CLIENT) $(SERVER)
 clean:
-	$(RM) *.o 
+	$(RM) *.o ./my_rpc_server ./my_rpc_client 
 
