@@ -29,14 +29,8 @@ struct coupled_int_list {
 typedef struct coupled_int_list coupled_int_list;
 
 struct coupled_matrix {
-	struct {
-		u_int a_len;
-		int *a_val;
-	} a;
-	struct {
-		u_int b_len;
-		int *b_val;
-	} b;
+	intlist a;
+	intlist b;
 	int d1;
 	int d2;
 };

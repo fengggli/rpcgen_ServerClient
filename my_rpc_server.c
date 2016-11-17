@@ -39,26 +39,52 @@ merge_1_svc(coupled_int_list *argp, struct svc_req *rqstp)
 	 * insert server code here
 	 */
 
-    /*
     result = NULL;
 
     intlist a = argp->a;
     intlist b = argp->b;
 
-    intlist p;
-    intlist tail = result;
+    intlist p, head;
+    // result
+    intlist result_tail = NULL;
+    intlist result_head = NULL;
+
     // try to merge two list
-    while(p=a; p->next != NULL; p++){
+    for(p=a; p != NULL; p = p->next){
         // get a new node
+
         intnode* tmp =  (intnode*)malloc(sizeof(intnode));
+        // copy the content
+        tmp->v = p->v;
         tmp->next = NULL;
-        if(result == NULL)
-
-        
-
+        // if this this is the first node
+        if(result_tail == NULL){
+            result_tail=tmp;
+            result_head = tmp;
+        }else{
+            result_tail->next = tmp;
+            result_tail = tmp;
+        }
     }
-    while
-    */
+    for(p=b; p != NULL; p = p->next){
+        // get a new node
+
+        intnode* tmp =  (intnode*)malloc(sizeof(intnode));
+        // copy the content
+        tmp->v = p->v;
+        tmp->next = NULL;
+        // if this this is the first node
+        if(result_tail == NULL){
+            result_tail=tmp;
+            result_head = tmp;
+        }else{
+            result_tail->next = tmp;
+            result_tail = tmp;
+        }
+    }
+    result = result_head;
+
+
         
 	return &result;
 }
@@ -148,7 +174,6 @@ addmatrix_1_svc(coupled_matrix *argp, struct svc_req *rqstp)
             result += (pa->v + pb->v);
             pa = pa->next;
             pb = pb->next;
-        }
     }
 	return &result;
 }

@@ -7,6 +7,24 @@
 #include "my_rpc.h"
 #include <stdio.h>
 
+void print_list(intlist l){
+    intlist p;
+    for(p = l; p!=NULL; p = p->next)
+        printf("%d ", p->v);
+    printf("\n");
+}
+
+intlist generate_list(int *a, int size){
+    intlist head = NULL;
+    int i;
+    for(i = 0; i< size; i++){
+        intlist tmp = (intlist)malloc(sizeof(intnode));
+        tmp->v = a[i];
+        tmp->next = head;
+        head = tmp;
+    }  
+    return head;
+}
 
 void
 clockprog_1(char *host)
@@ -67,9 +85,33 @@ clockprog_1(char *host)
 
         // function 2 merge two lists
         else if (c == '2'){
+            // prepare input
+            int input_a[] = {1,2,3,4,5};
+            int input_b[] = {2,4,5,6,7};
+
+            int size_a = sizeof(input_a)/sizeof(int);
+            int size_b = sizeof(input_b)/sizeof(int);
+
+            // construct the list
+            merge_1_arg.a = generate_list(input_a, size_a);
+            merge_1_arg.b = generate_list(input_b, size_b);
+
+            // print the input
+            printf("list 1:\n\t");
+            print_list(merge_1_arg.a);
+
+            printf("list 2:\n\t");
+            print_list(merge_1_arg.b);
+
+            // remote call
             result_2 = merge_1(&merge_1_arg, clnt);
             if (result_2 == (intlist *) NULL) {
                 clnt_perror (clnt, "call failed");
+            }
+            else{
+                // print the merge result
+                printf("after remote merge\n\t");
+                print_list(*result_2);
             }
         }
 
@@ -133,7 +175,7 @@ clockprog_1(char *host)
                 pa->next = heada;
                 heada = pa;
 
-                pa = (intnode *)malloc(sizeof(intnode));
+                pb = (intnode *)malloc(sizeof(intnode));
 
                 pb->v = b[i];
                 pb->next = headb;
@@ -141,8 +183,8 @@ clockprog_1(char *host)
             }
 
             printf("array is mashalled\n");
-
-            
+            addmatrix_1_arg.a = heada;
+            addmatrix_1_arg.b = headb;
 
             result_5 = addmatrix_1(&addmatrix_1_arg, clnt);
 

@@ -44,11 +44,9 @@ xdr_coupled_matrix (XDR *xdrs, coupled_matrix *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_array (xdrs, (char **)&objp->a.a_val, (u_int *) &objp->a.a_len, ~0,
-		sizeof (int), (xdrproc_t) xdr_int))
+	 if (!xdr_intlist (xdrs, &objp->a))
 		 return FALSE;
-	 if (!xdr_array (xdrs, (char **)&objp->b.b_val, (u_int *) &objp->b.b_len, ~0,
-		sizeof (int), (xdrproc_t) xdr_int))
+	 if (!xdr_intlist (xdrs, &objp->b))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->d1))
 		 return FALSE;
