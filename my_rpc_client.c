@@ -7,7 +7,11 @@
 #include "my_rpc.h"
 #include <stdio.h>
 
-
+/*
+ * print list content
+ * input:
+ *  l the list struct
+ */
 void print_list(intlist l){
     intlist p;
 
@@ -86,7 +90,7 @@ clockprog_1(char *host)
 
     while(1){
             
-        printf("1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit\n");
+        printf("\n1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit\n");
         my_string = (char *)malloc(nbytes +1);
         bytes_read = getline(&my_string,&nbytes, stdin);
         if(bytes_read == -1){

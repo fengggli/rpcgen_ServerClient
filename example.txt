@@ -1,0 +1,58 @@
+lifen@in-csci-rrpc03:~/Workspace/Feng_DS3$./my_rpc_client 10.234.136.56
+
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+1
+
+user input 1
+time in server: Mon Nov 21 11:51:38 2016
+
+
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+2
+
+user input 2
+list 1:
+        5 4 3 2 1 
+list 2:
+        7 6 5 4 2 
+after remote merge
+        5 4 3 2 1 7 6 5 4 2 
+
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+3
+
+user input 3
+please type a sentence
+hello World how are you
+string read: hello World how are you
+
+after reverse: uoy era woh dlroW olleh
+
+
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+4
+
+user input 4
+all the files under current directory:
+    the files in directory ".":
+.   ..  Makefile.my_rpc my_rpc_server.c my_rpc_svc.o    .README.swp multithread my_rpc_clnt.c   my_rpc_svc.c    Makefile    my_rpc_xdr.o    my_rpc.h    my_rpc.x    .git    my_rpc_client.c my_rpc_client.o my_rpc_xdr.c    my_rpc_client   my_rpc_server   README  archives    my_rpc_server.o my_rpc_clnt.o
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+5
+
+user input 5
+matrix a:
+    1   2   3   
+    4   5   6   
+matrix b:
+    1   2   3   
+    4   5   6   
+array is mashalled
+result:
+    2   4   6   
+    8   10  12  
+
+1. datatime; 2. Merge 3. ReverseEcho; 4.ListFile 5.Add Matrix q: quit
+q
+
+user input q
+bye

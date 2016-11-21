@@ -143,7 +143,7 @@ readdir_1_svc(char **argp, struct svc_req *rqstp)
         sprintf(tmp,"the files in directory \"%s\":\n",*argp);
         while (dir = readdir(d))
         {
-            sprintf(tmp+ strlen(tmp),"%s\n", dir->d_name);
+            sprintf(tmp+ strlen(tmp),"%s\t", dir->d_name);
         }
         closedir(d);
     }

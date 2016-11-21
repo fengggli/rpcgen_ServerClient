@@ -1,0 +1,48 @@
+Simple example of rpcgen in java
+    --program 3 in CSCI 53700, Distributed System in IUPUI
+
+Author:Feng Li
+Time: Nov 16, 2016
+
+
+Description:
+    This is a simple example of rpcgen utility.
+    It support the folowing (Remote)functions:
+        1. print the server side date and time
+        2. Merge two lists
+        3. Reverse the client input
+        4. return a list of current directory
+        5. Add two integer matrix
+
+
+
+Make:
+    run 'make' in the package root directory
+
+quick run:
+
+    AFTER MAKE:
+    In the server machine(10.234.136.56), type the following command to start the server:
+        ./my_rpc_server &
+
+    To stop the server:
+        pkill -f my_rpc_server
+
+
+
+    In the client machine(10.234.136.57), type the following command to start the client
+
+        ./my_rpc_client ${server_ip}
+    For the server in rrpc02:
+        ./my_rpc_client 10.234.136.56
+    
+    Then you can choose the corrosponding function in the client side. 
+    
+    In the 'example.txt' there is a file for client side input and output.
+
+
+Notes:
+    1. if you get "call failed", please check you have run the my_rpc_client with the correct server ip address
+    2. For different input lists in function 2, pleae modify the line 119,120 in my_rpc_client.c
+    3. For different input matrix in function 5, please modify the line 198-201 in my_rpc_client.c. You need to define the dimensions in d1 and d2, then int values in a[] and b[].
+    
