@@ -1,3 +1,4 @@
+const MAXLEN = 255;
 typedef struct intnode *intlist;      /* a link in the listing */  
 struct intnode  
 { 
@@ -11,12 +12,16 @@ struct coupled_int_list
     intlist b;
 };
 
-struct coupled_matrix
+struct matrix
 {
-    intlist a;
-    intlist b;
+    int data<MAXLEN>;
     int d1;
     int d2;
+};
+struct coupled_matrix
+{
+    matrix a;
+    matrix b;
 };
 
 
@@ -31,6 +36,6 @@ program CLOCKPROG
         intlist MERGE(coupled_int_list l) = 2;
         string REVERSE(string s) = 3;
         string READDIR(string s) = 4;
-        int ADDMATRIX(coupled_matrix m) = 5;
+        matrix ADDMATRIX(coupled_matrix m) = 5;
     } = 1; 
 } = 0x31111111; 

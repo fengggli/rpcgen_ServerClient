@@ -60,7 +60,7 @@ clockprog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 
 	case ADDMATRIX:
 		_xdr_argument = (xdrproc_t) xdr_coupled_matrix;
-		_xdr_result = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_matrix;
 		local = (char *(*)(char *, struct svc_req *)) addmatrix_1_svc;
 		break;
 

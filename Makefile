@@ -41,7 +41,7 @@ $(CLIENT) : $(OBJECTS_CLNT)
 $(SERVER) : $(OBJECTS_SVC) 
 	$(LINK.c) -o $(SERVER) $(OBJECTS_SVC) $(LDLIBS)
 run_client:
-	./my_rpc_client 134.68.51.16
+	./my_rpc_client 10.234.136.56
 run_server:
 	./my_rpc_server &
 

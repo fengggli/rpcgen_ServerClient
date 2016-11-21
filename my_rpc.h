@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+#define MAXLEN 255
 
 typedef struct intnode *intlist;
 
@@ -28,11 +29,19 @@ struct coupled_int_list {
 };
 typedef struct coupled_int_list coupled_int_list;
 
-struct coupled_matrix {
-	intlist a;
-	intlist b;
+struct matrix {
+	struct {
+		u_int data_len;
+		int *data_val;
+	} data;
 	int d1;
 	int d2;
+};
+typedef struct matrix matrix;
+
+struct coupled_matrix {
+	matrix a;
+	matrix b;
 };
 typedef struct coupled_matrix coupled_matrix;
 
@@ -53,8 +62,8 @@ extern  char ** reverse_1_svc(char **, struct svc_req *);
 extern  char ** readdir_1(char **, CLIENT *);
 extern  char ** readdir_1_svc(char **, struct svc_req *);
 #define ADDMATRIX 5
-extern  int * addmatrix_1(coupled_matrix *, CLIENT *);
-extern  int * addmatrix_1_svc(coupled_matrix *, struct svc_req *);
+extern  matrix * addmatrix_1(coupled_matrix *, CLIENT *);
+extern  matrix * addmatrix_1_svc(coupled_matrix *, struct svc_req *);
 extern int clockprog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
@@ -71,8 +80,8 @@ extern  char ** reverse_1_svc();
 extern  char ** readdir_1();
 extern  char ** readdir_1_svc();
 #define ADDMATRIX 5
-extern  int * addmatrix_1();
-extern  int * addmatrix_1_svc();
+extern  matrix * addmatrix_1();
+extern  matrix * addmatrix_1_svc();
 extern int clockprog_1_freeresult ();
 #endif /* K&R C */
 
@@ -82,12 +91,14 @@ extern int clockprog_1_freeresult ();
 extern  bool_t xdr_intlist (XDR *, intlist*);
 extern  bool_t xdr_intnode (XDR *, intnode*);
 extern  bool_t xdr_coupled_int_list (XDR *, coupled_int_list*);
+extern  bool_t xdr_matrix (XDR *, matrix*);
 extern  bool_t xdr_coupled_matrix (XDR *, coupled_matrix*);
 
 #else /* K&R C */
 extern bool_t xdr_intlist ();
 extern bool_t xdr_intnode ();
 extern bool_t xdr_coupled_int_list ();
+extern bool_t xdr_matrix ();
 extern bool_t xdr_coupled_matrix ();
 
 #endif /* K&R C */

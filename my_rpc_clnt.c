@@ -69,15 +69,15 @@ readdir_1(char **argp, CLIENT *clnt)
 	return (&clnt_res);
 }
 
-int *
+matrix *
 addmatrix_1(coupled_matrix *argp, CLIENT *clnt)
 {
-	static int clnt_res;
+	static matrix clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, ADDMATRIX,
 		(xdrproc_t) xdr_coupled_matrix, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_matrix, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}

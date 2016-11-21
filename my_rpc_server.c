@@ -156,27 +156,43 @@ readdir_1_svc(char **argp, struct svc_req *rqstp)
  * function 5
  * add two matrix and return the integer sum
  */
-int *
+matrix *
 addmatrix_1_svc(coupled_matrix *argp, struct svc_req *rqstp)
 {
-	static int  result;
+	static matrix  result;
+
+    matrix *pa, *pb;
+    pa = &(argp->a);
+    pb = &(argp->b);
+
+
 
 	/*
 	 * insert server code here
 	 */
+
+    int d1, d2, i;
+    if(pa->d1!= pb->d1 || pa->d2!=pb->d2)
+        return NULL;
     // get the dimension
-    intnode *pa = argp->a;
-    intnode *pb = argp->b;
-    int d1 = argp->d1;
-    int d2 = argp->d2;
-    int i, j;
+    d1 = pa->d1;
+    d2 = pa->d2;
+
+    // get data allocation
+    int *pdata = (int *)malloc(sizeof(int)*d1*d2);
+    if(pdata == NULL){
+        return NULL;
+    }
 
     // add them up
-    result = 0;
+    int index = 0;
     for(i = 0; i< d1*d2; i++){
-            result += (pa->v + pb->v);
-            pa = pa->next;
-            pb = pb->next;
+            pdata[i] = pa->data.data_val[i]+pb->data.data_val[i];
     }
+
+    result.data.data_len = d1*d2;
+    result.data.data_val = pdata;
+    result.d1 = d1;
+    result.d2 = d2;
 	return &result;
 }

@@ -7,12 +7,37 @@
 #include "my_rpc.h"
 #include <stdio.h>
 
+
 void print_list(intlist l){
     intlist p;
+
+    printf("\t");
     for(p = l; p!=NULL; p = p->next)
         printf("%d ", p->v);
     printf("\n");
 }
+
+
+/*
+ * print matrix content
+ * input:
+ *  p, address of matrix
+ *  d1, d2, dimensions of matrix
+ */
+void print_matrix(int *p, int d1, int d2){
+    int i, j;
+    int index = 0;
+   
+    for(i = 0; i<d1; i++){
+        printf("\t");
+        for(j = 0; j< d2; j++){
+            printf("%d\t",c[index++]);
+        }
+        printf("\n");
+    }
+}
+
+        
 
 intlist generate_list(int *a, int size){
     intlist head = NULL;
@@ -38,7 +63,7 @@ clockprog_1(char *host)
 	char * reverse_1_arg;
 	char  **result_4;
 	char * readdir_1_arg;
-	int  *result_5;
+	matrix  *result_5;
 	coupled_matrix  addmatrix_1_arg;
 
     // user input
@@ -145,13 +170,9 @@ clockprog_1(char *host)
         // function 4 list all files
         else if(c == '4'){
 
-            printf("type the path :");
+            printf("all the files under current directory:\n"); 
 
-            char input[80];
-            scanf("%s", input);
-            getchar();
-
-            printf("all the files under: %s\n", input); 
+            char *input = ".";
 
             readdir_1_arg = input;
             result_4 = readdir_1((void*)&readdir_1_arg, clnt);
@@ -168,42 +189,46 @@ clockprog_1(char *host)
         else if(c == '5'){
             //  prepare the two matrix
             int i, j;
+
+            // input matrix
             int d1 = 2;
             int d2 = 3;
             int a[] = {1,2,3,4,5,6};
             int b[] = {1,2,3,4,5,6};
-            intnode *heada,*pa,*headb, *pb;
 
-            addmatrix_1_arg.d1 = d1;
-            addmatrix_1_arg.d2 = d2;
+            // output matrix
+            int *c;
+
+
+            addmatrix_1_arg.a.data.data_len = d1*d2; 
+            addmatrix_1_arg.a.data.data_val = a;
+            addmatrix_1_arg.a.d1 = d1;
+            addmatrix_1_arg.a.d2 = d2;
+
+            addmatrix_1_arg.b.data.data_len = d1*d2; 
+            addmatrix_1_arg.b.data.data_val = a;
+            addmatrix_1_arg.b.d1 = d1;
+            addmatrix_1_arg.b.d2 = d2;
+
             // save the arrays
-            heada = NULL;
-            headb = NULL;
-            for(i = 0; i< d1*d2; i++){
-                pa = (intnode *)malloc(sizeof(intnode));
-                pa->v = a[i];
-                pa->next = heada;
-                heada = pa;
+            printf("\t matrix a:\n");
+            print_matrix(a, d1, d2);
 
-                pb = (intnode *)malloc(sizeof(intnode));
-
-                pb->v = b[i];
-                pb->next = headb;
-                headb = pb;
-            }
+            printf("\t matrix b:\n");
+            print_matrix(b, d1, d2);
 
             printf("array is mashalled\n");
-            addmatrix_1_arg.a = heada;
-            addmatrix_1_arg.b = headb;
 
             result_5 = addmatrix_1(&addmatrix_1_arg, clnt);
 
-            if (result_5 == (int *) NULL) {
+            if (result_5 == (matrix *) NULL) {
                 clnt_perror (clnt, "call failed");
             }
             // else print the content of the matrix
             else{
-                printf("sum is %d\n", *result_5);
+
+                printf("\t result:\n");
+                print_matrix(result_5->data.data_val, d1, d2);
             }
         }
 

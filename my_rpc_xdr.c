@@ -40,17 +40,28 @@ xdr_coupled_int_list (XDR *xdrs, coupled_int_list *objp)
 }
 
 bool_t
-xdr_coupled_matrix (XDR *xdrs, coupled_matrix *objp)
+xdr_matrix (XDR *xdrs, matrix *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_intlist (xdrs, &objp->a))
-		 return FALSE;
-	 if (!xdr_intlist (xdrs, &objp->b))
+	 if (!xdr_array (xdrs, (char **)&objp->data.data_val, (u_int *) &objp->data.data_len, MAXLEN,
+		sizeof (int), (xdrproc_t) xdr_int))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->d1))
 		 return FALSE;
 	 if (!xdr_int (xdrs, &objp->d2))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_coupled_matrix (XDR *xdrs, coupled_matrix *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_matrix (xdrs, &objp->a))
+		 return FALSE;
+	 if (!xdr_matrix (xdrs, &objp->b))
 		 return FALSE;
 	return TRUE;
 }
