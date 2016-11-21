@@ -31,7 +31,7 @@ void print_matrix(int *p, int d1, int d2){
     for(i = 0; i<d1; i++){
         printf("\t");
         for(j = 0; j< d2; j++){
-            printf("%d\t",c[index++]);
+            printf("%d\t",p[index++]);
         }
         printf("\n");
     }
@@ -94,7 +94,7 @@ clockprog_1(char *host)
             exit(-1); 
         }
         c = my_string[0];
-        printf("user input %c\n", c);
+        printf("\nuser input %c\n", c);
 
         // function 1 show the server time
         if(c == '1'){
@@ -211,10 +211,10 @@ clockprog_1(char *host)
             addmatrix_1_arg.b.d2 = d2;
 
             // save the arrays
-            printf("\t matrix a:\n");
+            printf("matrix a:\n");
             print_matrix(a, d1, d2);
 
-            printf("\t matrix b:\n");
+            printf("matrix b:\n");
             print_matrix(b, d1, d2);
 
             printf("array is mashalled\n");
@@ -227,7 +227,7 @@ clockprog_1(char *host)
             // else print the content of the matrix
             else{
 
-                printf("\t result:\n");
+                printf("result:\n");
                 print_matrix(result_5->data.data_val, d1, d2);
             }
         }
